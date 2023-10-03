@@ -26,7 +26,11 @@
 
 ### Project setup instructions
 
-*TK: Instructions go here*
+*   Clone this repository.
+*   `cd` into the new clone.
+*   `pipenv run ./run_me_first.py`
+
+*TK: More instructions go here.*
 
 ## Data notes
 
