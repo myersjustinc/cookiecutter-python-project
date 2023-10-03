@@ -1,5 +1,5 @@
 project:
-  output-dir: data/html_reports
+  output-dir: scratch
   execute-dir: project
 number-sections: false
 toc: true

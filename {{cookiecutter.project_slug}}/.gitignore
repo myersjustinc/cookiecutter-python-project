@@ -1,7 +1,7 @@
 *.vim
 .env
 .Renviron
-.venv
+.virtualenv
 .quarto
 .DS_Store
 .ipynb_checkpoints
@@ -12,3 +12,5 @@ analysis/archive/*.ipynb
 
 scratch/*
 !scratch/.gitkeep
+
+.quarto
