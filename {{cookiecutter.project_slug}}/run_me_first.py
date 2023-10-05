@@ -38,6 +38,10 @@ workon_script = dedent(f'''
         'WORKON_HOME',
         args['venv_dir'])
     set_key(
+        args['project_env_path'],
+        'PIPENV_CUSTOM_VENV_NAME',
+        args['project_slug'])
+    set_key(
         args["project_env_path"],
         'JUPYTER_DATA_DIR',
         os.path.join(
