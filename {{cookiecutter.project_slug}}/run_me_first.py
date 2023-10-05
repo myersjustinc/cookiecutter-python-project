@@ -20,35 +20,24 @@ venv_dir.mkdir(parents=False, exist_ok=True)
 pipenv_interpreter = Path(which('pipenv')).resolve().parent / 'python3'
 project_env_path = project_root / '.env'
 
-env_json = json.dumps({
-    'project_env_path': str(project_env_path),
-    'venv_dir': str(venv_dir),
-    'project_slug': project_slug,
-})
-
 workon_script = dedent(f'''
-    import json
     import os.path
+    import sys
     from pipenv.vendor.dotenv import set_key
 
-    args = json.loads({repr(env_json)})  # FIXME: eval
+    project_env_path, venv_dir, project_slug = sys.argv[1:]
 
+    set_key(project_env_path, 'WORKON_HOME', venv_dir)
+    set_key(project_env_path, 'PIPENV_CUSTOM_VENV_NAME', project_slug)
     set_key(
-        args['project_env_path'],
-        'WORKON_HOME',
-        args['venv_dir'])
-    set_key(
-        args['project_env_path'],
-        'PIPENV_CUSTOM_VENV_NAME',
-        args['project_slug'])
-    set_key(
-        args["project_env_path"],
+        project_env_path,
         'JUPYTER_DATA_DIR',
-        os.path.join(
-            args['venv_dir'], args['project_slug'], 'share', 'jupyter'))
+        os.path.join(venv_dir, project_slug, 'share', 'jupyter'))
     ''')
 subprocess.run(
-    [str(pipenv_interpreter),],
+    [
+        str(pipenv_interpreter), '-',
+        str(project_env_path), str(venv_dir), project_slug],
     check=True, input=workon_script, cwd=project_root,
     capture_output=True, encoding='utf-8')
 
@@ -84,19 +73,19 @@ if not pipfile_path.is_file():
         'quarto',
     ]
 
-install_json = json.dumps(install_args)
 install_script = dedent(f'''
     import json
+    import sys
     from pipenv.utils.environment import load_dot_env
     from pipenv.project import Project
     from pipenv.routines.install import do_install
-    args = json.loads({repr(install_json)})  # FIXME: eval
+    args = json.loads(sys.argv[1])
     project = Project()
     load_dot_env(project)
     do_install(project, **args)
     ''')
 subprocess.run(
-    [str(pipenv_interpreter),],
+    [str(pipenv_interpreter), '-', json.dumps(install_args)],
     check=True, input=install_script, cwd=project_root, encoding='utf-8')
 
 
@@ -124,15 +113,15 @@ for subdir_name in ('analysis', 'etl',):
 jupytext_args = ['--set-formats', 'qmd,ipynb']
 jupytext_args.extend(map(str, notebook_source_paths))
 
-jupytext_json = json.dumps(jupytext_args)
 pairing_script = dedent(f'''
     import json
+    import sys
     from jupytext.cli import jupytext
-    args = json.loads({repr(jupytext_json)})  # FIXME: eval
+    args = json.loads(sys.argv[1])
     jupytext(args)
     ''')
 subprocess.run(
-    [str(project_interpreter),],
+    [str(project_interpreter), '-', json.dumps(jupytext_args)],
     check=True, input=pairing_script, cwd=project_root, encoding='utf-8')
 
 
