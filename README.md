@@ -90,14 +90,14 @@ This is a project template powered by [Cookiecutter][] for use with
     *   Assuming you're working with [Cookiecutter][] directly:
 
         ```sh
-        cookiecutter 'gh:myersjustinc/analysis-template-python'
+        cookiecutter 'gh:myersjustinc/cookiecutter-python-project'
         ```
 
     *   Or if you're using [AP DataKit][] and have [datakit-project][]
         installed:
 
         ```sh
-        datakit project create --template 'gh:myersjustinc/analysis-template-python'
+        datakit project create --template 'gh:myersjustinc/cookiecutter-python-project'
         ```
 
 *   `cd` into your new project.
