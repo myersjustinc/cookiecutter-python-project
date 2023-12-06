@@ -10,6 +10,9 @@ analysis/*.ipynb
 analysis/archive/*.ipynb
 !analysis/notebook_templates/*.ipynb
 
+etl/*.ipynb
+etl/archive/*.ipynb
+
 scratch/*
 !scratch/.gitkeep
 
