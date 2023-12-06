@@ -97,8 +97,12 @@ notebook_templates_dir = project_root / 'analysis' / 'notebook_templates'
 jupyter_templates_dir = (
     venv_dir / project_slug / 'share' / 'jupyter' / 'notebook_templates')
 jupyter_templates_dir.parent.mkdir(parents=True, exist_ok=True)
-jupyter_templates_dir.symlink_to(
-    notebook_templates_dir, target_is_directory=True)
+try:
+    jupyter_templates_dir.symlink_to(
+        notebook_templates_dir, target_is_directory=True)
+except FileExistsError as e:
+    if jupyter_templates_dir.readlink() != notebook_templates_dir:
+        raise e
 
 
 # PAIR EXISTING NOTEBOOKS -----------------------------------------------------
