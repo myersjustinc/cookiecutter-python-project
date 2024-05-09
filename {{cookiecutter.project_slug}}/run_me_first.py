@@ -7,6 +7,7 @@ from shlex import quote as sh_quote
 from shutil import copytree, which
 import subprocess
 from textwrap import dedent
+from warnings import warn
 
 
 # SET `${WORKON_HOME}` --------------------------------------------------------
@@ -23,8 +24,10 @@ if not pipenv_interpreter.exists():
     pipenv_interpreter = (
         pipenv_interpreter.parent.parent / 'libexec' / 'bin' / 'python3')
     if not pipenv_interpreter.exists():
-        raise RuntimeError(
-            'Cannot find Python interpreter for installed pipenv')
+        pipenv_interpreter = Path(which('python3')).resolve()
+        warn(
+            f'Cannot find Python interpreter for installed pipenv; '
+            f'trying with the default of {pipenv_interpreter}')
 project_env_path = project_root / '.env'
 
 workon_script = dedent(f'''
