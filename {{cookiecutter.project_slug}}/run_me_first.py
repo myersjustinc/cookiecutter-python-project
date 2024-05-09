@@ -19,6 +19,12 @@ venv_dir = project_root / '.virtualenv'
 venv_dir.mkdir(parents=False, exist_ok=True)
 
 pipenv_interpreter = Path(which('pipenv')).resolve().parent / 'python3'
+if not pipenv_interpreter.exists():
+    pipenv_interpreter = (
+        pipenv_interpreter.parent.parent / 'libexec' / 'bin' / 'python3')
+    if not pipenv_interpreter.exists():
+        raise RuntimeError(
+            'Cannot find Python interpreter for installed pipenv')
 project_env_path = project_root / '.env'
 
 workon_script = dedent(f'''
