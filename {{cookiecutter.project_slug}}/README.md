@@ -32,6 +32,16 @@
 
 *TK: More instructions go here.*
 
+### Usage
+
+To open up a [JupyterLab][] environment and get to work, run:
+
+```sh
+pipenv run jupyter lab
+```
+
+[JupyterLab]: https://jupyterlab.readthedocs.io/
+
 ## Data notes
 
 *TK: Add important caveats, limitations, and source contact info here.*

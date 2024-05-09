@@ -109,7 +109,14 @@ This is a project template powered by [Cookiecutter][] for use with
     pipenv run ./run_me_first.py
     ```
 
+*   To open up a [JupyterLab][] environment and get to work, run:
+
+    ```sh
+    pipenv run jupyter lab
+    ```
+
 [AP DataKit]: https://datakit.ap.org/
+[JupyterLab]: https://jupyterlab.readthedocs.io/
 
 ## Prerequisites ##
 
